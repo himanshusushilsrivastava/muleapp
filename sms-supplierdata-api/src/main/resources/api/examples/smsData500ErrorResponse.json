@@ -1,0 +1,6 @@
+{
+	"message": " Error while retrieving sms data",
+	"requestPath"  :"",
+	"errorDescription": "<<error.description>>",
+	"errorType" : "<<error.errorType.identifier>>"
+}

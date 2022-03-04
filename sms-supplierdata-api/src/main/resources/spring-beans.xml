@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xmlns:ss="http://www.springframework.org/schema/security"
+  	xsi:schemaLocation="
+  		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+
+  <bean id="udhDatasource" class="org.apache.commons.dbcp2.BasicDataSource">
+    <property name="driverClassName" value="${secure::smssupplierdataapi.udh.jdbc.driver}"/>
+    <property name="url" value="${secure::smssupplierdataapi.udh.db.url}"/>
+    <property name="username" value="${secure::smssupplierdataapi.udh.db.username}"/>
+    <property name="password" value="${secure::smssupplierdataapi.udh.db.password}"/>
+    <property name="initialSize" value="${secure::smssupplierdataapi.udh.jdbc.pool.initialSize}"/>
+    <property name="maxTotal" value="${secure::smssupplierdataapi.udh.jdbc.pool.maxTotal}"/>
+    <property name="maxIdle" value="${secure::smssupplierdataapi.udh.jdbc.pool.maxIdle}"/>
+    <property name="minIdle" value="${secure::smssupplierdataapi.udh.jdbc.pool.minIdle}"/>
+    <property name="maxWaitMillis" value="${secure::smssupplierdataapi.udh.jdbc.pool.maxWaitMillis}"/>
+    <property name="defaultQueryTimeout" value="${secure::smssupplierdataapi.udh.jdbc.pool.defaultQueryTimeout}"/>
+    <property name="validationQuery" value="${secure::smssupplierdataapi.udh.jdbc.pool.validationQuery}"/>
+    <property name="validationQueryTimeout" value="${secure::smssupplierdataapi.udh.jdbc.pool.validationQueryTimeout}"/>
+    <property name="testOnBorrow" value="${secure::smssupplierdataapi.udh.jdbc.pool.testOnBorrow}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${secure::smssupplierdataapi.udh.jdbc.pool.timeBetweenEvictionRunsMillis}"/>
+    <property name="minEvictableIdleTimeMillis" value="${secure::smssupplierdataapi.udh.jdbc.pool.minEvictableIdleTimeMillis}"/>
+    <property name="removeAbandonedOnMaintenance" value="${secure::smssupplierdataapi.udh.jdbc.pool.removeAbandonedOnMaintenance}"/>
+    <property name="removeAbandonedOnBorrow" value="${secure::smssupplierdataapi.udh.jdbc.pool.removeAbandonedOnBorrow}"/>
+    <property name="removeAbandonedTimeout" value="${secure::smssupplierdataapi.udh.jdbc.pool.removeAbandonedTimeout}"/>
+    <property name="logAbandoned" value="${secure::smssupplierdataapi.udh.jdbc.pool.logAbandoned}"/>
+  </bean>
+
+
+</beans>

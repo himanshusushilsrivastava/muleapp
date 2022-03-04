@@ -1,0 +1,14 @@
+#smssupplierdataapi api Properties
+smssupplierdataapi:
+  #Environment Properties
+  environment: "local"
+  
+    #DB Queries
+  db:
+    queries:
+      #UDH DB queries
+      udh:
+        vendors:
+          select: "SELECT  count(*) OVER() AS full_count,sms_id, effective_date, last_changed_date, entity_name, region, address_line, city, country_key, postal_code FROM pgs_udh_dm.veeva_sms  where effective_end_date between to_timestamp(:fromRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) and to_timestamp(:toRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) ORDER BY effective_end_date  LIMIT ':limit' OFFSET ':offSet'"
+        inactivevendors: 
+          select: "SELECT  count(*) OVER() AS full_count,sms_id,effective_end_date FROM pgs_udh_dm.veeva_sms_inactive where effective_end_date between to_timestamp(:fromRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) and to_timestamp(:toRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) ORDER BY effective_end_date LIMIT  $(vars.requestParams.limit) OFFSET  $(vars.requestParams.offSet)"

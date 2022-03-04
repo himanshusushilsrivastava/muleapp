@@ -1,0 +1,31 @@
+#smssupplierdata api Properties
+smssupplierdataapi:
+  #Http On-Demand Properties
+  http:
+    host: "0.0.0.0"
+    port: "5381"
+    path: "/sms-supplierdata-v1/api/*"
+
+  udh: 
+    db:
+      url: "jdbc:redshift:iam://pgsudh-prod-bti-redshift.pfizer.com:5439/udh_prd_data_repository?Dbuser=srvamr-qmsesb&plugin_name=com.amazon.redshift.plugin.PingCredentialsProvider&idp_host=prodfederate.pfizer.com&idp_port=443&partner_spid=amazonRedshift&preferred_role=arn:aws:iam::604526422050:role/PGS-RS-UDH-PROD-RO-SSO&&AutoCreate=true&ssl=true&sslMode=verify-ca&clusterid=pgsudh-prod-bti&region=us-east-1&dbgroups=pgs_udh_prod_ro_grp"
+      username: "![PA1omFfifBdaF9Ug//luUw==]"
+      password: "![wq6BpM/kcs232XAYXUECgA==]"
+    jdbc:
+      driver: "com.amazon.redshift.jdbc42.Driver"
+      pool:
+        initialSize: "2"
+        maxTotal: "20"
+        maxIdle: "5"
+        minIdle: "2"
+        maxWaitMillis: "60000"
+        defaultQueryTimeout: "12000"
+        validationQuery: "select CURRENT_DATE"
+        validationQueryTimeout: "30"
+        testOnBorrow: "true"
+        timeBetweenEvictionRunsMillis: "30000"
+        minEvictableIdleTimeMillis: "15000"
+        removeAbandonedOnMaintenance: "true"
+        removeAbandonedOnBorrow: "true"
+        removeAbandonedTimeout: "30"
+        logAbandoned: "true"

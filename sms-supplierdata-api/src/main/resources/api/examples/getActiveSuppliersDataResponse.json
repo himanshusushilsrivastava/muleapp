@@ -1,0 +1,29 @@
+{
+    "totalRecords": 9,
+    "offset": "0",
+    "limit": "2",
+    "data": [
+        {
+            "last_changed_date": "2006-12-08T16:05:38",
+            "sms_id": "9029",
+            "address_line": "11041 RICHARDSON RD",
+            "country_key": "US",
+            "entity_name": "NEAGL",
+            "city": "ASHLAND",
+            "effective_date": "2006-12-08T16:05:38",
+            "region": "VA",
+            "postal_code": "23005-341"
+        },
+        {
+            "last_changed_date": "2006-12-08T16:06:47",
+            "sms_id": "902",
+            "address_line": "200 HWY",
+            "country_key": "US",
+            "entity_name": "PACKAGIN",
+            "city": "RICHMOND",
+            "effective_date": "2006-12-08T16:06:47",
+            "region": "VA",
+            "postal_code": "23224-760"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" 
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+		
+	<sub-flow name="udh-get-vendors-call" doc:id="0414c38d-e47e-453c-970f-9c70b0082108" >
+		<logger level="INFO" doc:name="logger" doc:id="e93fd1ff-040e-4409-882c-48b6751ae4d9" 
+			message='#[%dw 2.0				output application/json				---				{					processId: correlationId,					flowName: flow.name,					message: "Start:Fetch Vendors data from UDH DB v_veeva_sms Table."				}]' 
+			category="com.pfizer.sms.veeva"/>
+		
+		<db:select doc:name="Select" doc:id="f58030f2-05b8-4e21-a973-1e58edb5b4b3" config-ref="Database_Config_UDH">
+			<db:sql ><![CDATA[#["SELECT  count(*) OVER() AS full_count,sms_id, effective_date, last_changed_date, entity_name, region, address_line, city, country_key, postal_code FROM pgs_udh_dm.veeva_sms  where last_changed_date between to_timestamp(:fromRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) and to_timestamp(:toRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) ORDER BY last_changed_date LIMIT  $(vars.requestParams.limit) OFFSET  $(vars.requestParams.offSet)"]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+'fromRunDateTime': vars.requestParams.'fromDate',
+'toRunDateTime' :  vars.requestParams.'toDate',
+//'limit' :  vars.requestParams.'limit',
+//'offSet' :  vars.requestParams.'offSet'
+}]]]></db:input-parameters>
+		</db:select>
+		
+		<logger level="INFO" doc:name="logger" doc:id="c3d7c800-19f2-4420-a731-814f9a0bcc2d" 
+			message="#[%dw 2.0				output application/json				---				{					processId: correlationId,					flowName: flow.name,					message: &quot;End:Fetch Vendors data from UDH DB.No of records fetched:&quot; ++ (sizeOf(payload) default 'Nill')				}]" 
+			category="com.pfizer.sms.veeva"/>
+	</sub-flow>
+	
+	<sub-flow name="udh-get-inactive-vendors-call" doc:id="e6751d88-3118-42ee-b3d7-cd37b3542114" >
+		<logger level="INFO" doc:name="logger" doc:id="2674dd18-8b1e-4573-8f5f-fecd20f800a1" 
+			category="com.pfizer.sms.veeva" 
+			message='#[%dw 2.0				output application/json				---				{					processId: correlationId,					flowName: flow.name,					message: "Start:Fetch InActive Vendors data from UDH DB v_veeva_sms_inactive Table."				}]'/>
+		<db:select doc:name="Select" doc:id="f781f39f-1aa6-4730-b084-f1e3412706af" config-ref="Database_Config_UDH">
+			<db:sql ><![CDATA[#["SELECT  count(*) OVER() AS full_count,sms_id,effective_end_date FROM pgs_udh_dm.veeva_sms_inactive where effective_end_date between to_timestamp(:fromRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) and to_timestamp(:toRunDateTime, 'YYYY-MM-DD HH24\\:MI\\:SS', TRUE) ORDER BY effective_end_date LIMIT  $(vars.requestParams.limit) OFFSET  $(vars.requestParams.offSet)"]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+'fromRunDateTime': vars.requestParams.fromDate,
+'toRunDateTime' :  vars.requestParams.toDate,
+//'limit' :  vars.requestParams.limit as Number,
+//'offSet' :  vars.requestParams.offSet  as Number
+}]]]></db:input-parameters>
+		</db:select>
+		
+		<logger level="INFO" doc:name="logger" doc:id="298fcbb3-ebf8-432b-b234-7ba10f616792" 
+			category="com.pfizer.sms.veeva" 
+			message="#[%dw 2.0				output application/json				---				{					processId: correlationId,					flowName: flow.name,					message: &quot;END:Fetch InActive Vendors data from UDH DB v_veeva_sms_inactive Table.No of records fetched:&quot; ++ (sizeOf(payload) default 'Nill')				}]"/>
+	</sub-flow>
+</mule>

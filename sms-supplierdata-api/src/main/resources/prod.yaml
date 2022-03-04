@@ -1,0 +1,4 @@
+#smssupplierdata api Properties
+smssupplierdataapi:
+  #Environment Properties
+  environment: "prod"

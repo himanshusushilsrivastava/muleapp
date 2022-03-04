@@ -1,0 +1,58 @@
+#%RAML 1.0 
+title: sms supplierdata api
+version: v1
+
+securitySchemes:
+  oauth_2_0: !include oauth_2_0.raml
+
+#traits:
+# clientIdRequired: !include traits/clientid-required.raml
+
+
+/suppliers:
+  /active:
+    get:
+      #is: [clientIdRequired]
+      securedBy: [oauth_2_0]
+      description: Get  sms active suppliers data
+      queryParameters:
+        fromDate: 
+          type: string
+          example: "2009-03-09 07:10:54"
+        toDate:
+          type: string
+          example: "2009-03-09 07:10:54"
+        offSet: number
+        limit: number
+      responses:
+        200:
+           body:
+            application/json:
+              example: !include examples/getActiveSuppliersDataResponse.json
+        500:
+           body:
+            application/json:
+              example: !include examples/smsData500ErrorResponse.json
+  /inactive:
+    get:
+      #is: [clientIdRequired]
+      securedBy: [oauth_2_0]
+      description: Get  sms inactive suppliers data
+      queryParameters:
+        fromDate: 
+          type: string
+          example: "2009-03-09 07:10:54"
+        toDate:
+          type: string
+          example: "2009-03-09 07:10:54"
+        offSet: number
+        limit: number
+      responses:
+        200:
+           body:
+            application/json:
+              example: !include examples/getInActiveSuppliersDataResponse.json
+        500:
+           body:
+            application/json:
+              example: !include examples/smsData500ErrorResponse.json
